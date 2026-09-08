@@ -1,0 +1,130 @@
+/**
+ * Дизайн-токены. Компоненты не знают конкретных цветов — только роли.
+ * Смена темы = смена значений в одном месте.
+ */
+
+:root {
+  /* ── Типографика ────────────────────────────────────────────────── */
+  --font-display: 'Unbounded', 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Manrope', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --step--1: clamp(0.8rem, 0.77rem + 0.15vw, 0.875rem);
+  --step-0: clamp(0.95rem, 0.91rem + 0.2vw, 1.05rem);
+  --step-1: clamp(1.1rem, 1.03rem + 0.35vw, 1.3rem);
+  --step-2: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --step-3: clamp(1.7rem, 1.4rem + 1.4vw, 2.5rem);
+  --step-4: clamp(2.1rem, 1.5rem + 2.8vw, 4rem);
+  --step-5: clamp(2.8rem, 1.6rem + 5.6vw, 6.5rem);
+
+  /* ── Ритм и геометрия ───────────────────────────────────────────── */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: clamp(3rem, 2rem + 5vw, 6rem);
+  --space-3xl: clamp(4rem, 2.5rem + 7vw, 8rem);
+
+  --container: 75rem;
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+
+  --radius-xs: 0.375rem;
+  --radius-s: 0.625rem;
+  --radius-m: 1rem;
+  --radius-l: 1.5rem;
+  --radius-pill: 999px;
+
+  --header-h: 4.5rem;
+
+  /* ── Движение ───────────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 140ms;
+  --dur: 240ms;
+  --dur-slow: 480ms;
+
+  /* ── Светлая тема: извёстка, шерсть, солнце на камне ────────────── */
+  --bg: #f4ece0;
+  --bg-alt: #eee3d2;
+  --surface: #fffaf2;
+  --surface-2: #f7efe2;
+  --surface-inset: #ece0cd;
+
+  --text: #221a14;
+  --text-muted: #6f5c49;
+  --text-faint: #7f6c58;
+
+  --line: #e2d4bf;
+  --line-strong: #cdb99c;
+
+  --accent: #ab4e25;
+  --accent-hover: #9c4522;
+  --accent-soft: #fbede4;
+  --on-accent: #fff8f0;
+
+  --gold: #7d5a12;
+  --gold-soft: #f4e6c6;
+  --green: #4a7345;
+  --green-soft: #e8f2e5;
+  --red: #ab3626;
+  --red-soft: #f7e0da;
+
+  --shadow-s: 0 1px 2px rgb(58 40 24 / 0.06), 0 2px 8px rgb(58 40 24 / 0.05);
+  --shadow-m: 0 4px 12px rgb(58 40 24 / 0.08), 0 12px 32px rgb(58 40 24 / 0.09);
+  --shadow-l: 0 8px 24px rgb(58 40 24 / 0.1), 0 32px 64px rgb(58 40 24 / 0.14);
+
+  --backdrop: rgb(38 26 16 / 0.45);
+  --ornament: rgb(180 85 42 / 0.16);
+  --ornament-strong: rgb(180 85 42 / 0.3);
+
+  /* силуэты гор на первом экране: дальний → ближний */
+  --mount-3: #ddcbb1;
+  --mount-2: #c8b191;
+  --mount-1: #a98f6c;
+  --sky-top: #f8f1e6;
+  --sky-bottom: #efdfc8;
+}
+
+/* ── Тёмная тема: очаг, дым, медь ─────────────────────────────────── */
+:root[data-theme='dark'] {
+  --bg: #15120f;
+  --bg-alt: #12100d;
+  --surface: #201b16;
+  --surface-2: #262019;
+  --surface-inset: #2d251d;
+
+  --text: #f2e8da;
+  --text-muted: #a6937e;
+  --text-faint: #9a8874;
+
+  --line: #362d24;
+  --line-strong: #4a3d31;
+
+  --accent: #e08a4e;
+  --accent-hover: #eda066;
+  --accent-soft: #35241a;
+  --on-accent: #1c1108;
+
+  --gold: #d8b063;
+  --gold-soft: #33291a;
+  --green: #86b57e;
+  --green-soft: #1f2b1d;
+  --red: #e0705c;
+  --red-soft: #331d1a;
+
+  --shadow-s: 0 1px 2px rgb(0 0 0 / 0.4), 0 2px 8px rgb(0 0 0 / 0.3);
+  --shadow-m: 0 4px 12px rgb(0 0 0 / 0.45), 0 12px 32px rgb(0 0 0 / 0.4);
+  --shadow-l: 0 8px 24px rgb(0 0 0 / 0.5), 0 32px 64px rgb(0 0 0 / 0.55);
+
+  --backdrop: rgb(8 5 3 / 0.66);
+  --ornament: rgb(224 138 78 / 0.14);
+  --ornament-strong: rgb(224 138 78 / 0.32);
+
+  --mount-3: #241d18;
+  --mount-2: #2e251d;
+  --mount-1: #3a2e23;
+  --sky-top: #17130f;
+  --sky-bottom: #201913;
+}

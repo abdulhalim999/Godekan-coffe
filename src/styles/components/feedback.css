@@ -1,0 +1,110 @@
+/* Нижняя панель заказа (мобильные) и всплывающие уведомления. */
+
+.order-bar {
+  position: fixed;
+  inset: auto var(--space-s) calc(var(--space-s) + env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-l);
+  translate: 0 140%;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    translate var(--dur) var(--ease-in-out),
+    opacity var(--dur) var(--ease-out),
+    visibility var(--dur);
+}
+
+.order-bar.is-visible {
+  translate: 0 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+.order-bar__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+  text-align: left;
+}
+
+.order-bar__info .icon {
+  color: var(--accent);
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.order-bar__info span {
+  display: grid;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.order-bar__info strong {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.order-bar__info small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* На десктопе панель не нужна — там есть кнопка в шапке */
+@media (min-width: 48rem) {
+  .order-bar {
+    display: none;
+  }
+}
+
+/* ── Уведомления ───────────────────────────────────────────────────── */
+.toasts {
+  position: fixed;
+  z-index: 100;
+  inset: auto var(--space-s) calc(5.5rem + env(safe-area-inset-bottom)) var(--space-s);
+  display: grid;
+  gap: var(--space-2xs);
+  justify-items: center;
+  pointer-events: none;
+}
+
+.toast {
+  max-width: min(24rem, 100%);
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-pill);
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--step--1);
+  font-weight: 600;
+  box-shadow: var(--shadow-m);
+  opacity: 0;
+  translate: 0 1rem;
+  transition: opacity var(--dur) var(--ease-out), translate var(--dur) var(--ease-out);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.toast--success {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+@media (min-width: 48rem) {
+  .toasts {
+    inset: auto var(--space-m) var(--space-m) auto;
+    justify-items: end;
+  }
+}

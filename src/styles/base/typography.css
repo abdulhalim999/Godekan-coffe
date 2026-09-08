@@ -1,0 +1,93 @@
+/* Базовая типографика и общий фон страницы. */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--text);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(60rem 40rem at 80% -10%, var(--accent-soft), transparent 65%),
+    radial-gradient(50rem 35rem at -10% 20%, var(--surface-2), transparent 60%);
+  background-attachment: fixed;
+  transition: background-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: var(--step-5);
+}
+
+h2 {
+  font-size: var(--step-3);
+}
+
+h3 {
+  font-size: var(--step-1);
+}
+
+strong {
+  font-weight: 700;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Единый видимый фокус для клавиатуры */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+
+.icon--lg {
+  width: 1.75em;
+  height: 1.75em;
+}
+
+.icon--xl {
+  width: 3rem;
+  height: 3rem;
+}
+
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-s);
+  left: 50%;
+  translate: -50% -200%;
+  z-index: 100;
+  padding: var(--space-2xs) var(--space-s);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  transition: translate var(--dur) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  translate: -50% 0;
+}

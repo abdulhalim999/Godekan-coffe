@@ -1,0 +1,281 @@
+/* Шапка: логотип, навигация, тема, корзина, бургер. */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+
+.header.is-stuck {
+  border-bottom-color: var(--line);
+  box-shadow: var(--shadow-s);
+}
+
+.header__inner {
+  min-height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+}
+
+/* ── Логотип ───────────────────────────────────────────────────────── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-right: auto;
+}
+
+.logo__mark {
+  width: 2.35rem;
+  height: 2.35rem;
+  color: var(--accent);
+  transition: rotate var(--dur-slow) var(--ease-out);
+}
+
+.logo:hover .logo__mark {
+  rotate: 45deg;
+}
+
+.logo__text {
+  display: grid;
+  line-height: 1.05;
+}
+
+.logo__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-1);
+  letter-spacing: -0.01em;
+}
+
+.logo__sub {
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Навигация ─────────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  font-weight: 500;
+}
+
+.nav a {
+  position: relative;
+  padding: 0.35rem 0;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -0.15rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  scale: 0 1;
+  transition: scale var(--dur) var(--ease-out);
+}
+
+.nav a:hover,
+.nav a.is-active {
+  color: var(--text);
+}
+
+.nav a:hover::after,
+.nav a.is-active::after {
+  scale: 1 1;
+}
+
+/* ── Действия ──────────────────────────────────────────────────────── */
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--step--1);
+  font-weight: 600;
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.theme-toggle__icons {
+  display: grid;
+  place-items: center;
+}
+
+.theme-toggle__icons .icon {
+  grid-area: 1 / 1;
+  opacity: 0;
+  scale: 0.6;
+  rotate: -30deg;
+  transition: opacity var(--dur) var(--ease-out), scale var(--dur) var(--ease-out), rotate var(--dur) var(--ease-out);
+}
+
+.theme-toggle[data-mode='light'] .i-light,
+.theme-toggle[data-mode='dark'] .i-dark,
+.theme-toggle[data-mode='system'] .i-system {
+  opacity: 1;
+  scale: 1;
+  rotate: 0deg;
+}
+
+.cart-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.cart-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cart-btn__count {
+  position: absolute;
+  top: -0.3rem;
+  right: -0.3rem;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding-inline: 0.3rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  animation: pop var(--dur) var(--ease-out);
+}
+
+@keyframes pop {
+  from {
+    scale: 0.4;
+  }
+}
+
+/* ── Бургер ────────────────────────────────────────────────────────── */
+.burger {
+  display: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 0.7rem 0.65rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.burger span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: translate var(--dur) var(--ease-out), rotate var(--dur) var(--ease-out), opacity var(--dur-fast);
+}
+
+.burger.is-open span:nth-child(1) {
+  translate: 0 0.42rem;
+  rotate: 45deg;
+}
+
+.burger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.is-open span:nth-child(3) {
+  translate: 0 -0.42rem;
+  rotate: -45deg;
+}
+
+/* ── Планшет и мобильные ───────────────────────────────────────────── */
+@media (max-width: 59.9375rem) {
+  .burger {
+    display: flex;
+  }
+
+  .theme-toggle__label {
+    display: none;
+  }
+
+  .theme-toggle {
+    padding: 0.55rem;
+  }
+
+  .nav {
+    position: fixed;
+    inset: var(--header-h) 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-s) var(--gutter) var(--space-l);
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-l);
+    translate: 0 -110%;
+    visibility: hidden;
+    transition: translate var(--dur) var(--ease-in-out), visibility var(--dur);
+  }
+
+  .nav.is-open {
+    translate: 0 0;
+    visibility: visible;
+  }
+
+  .nav a {
+    padding: var(--space-s) 0;
+    font-size: var(--step-1);
+    font-family: var(--font-display);
+    color: var(--text);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav a::after {
+    display: none;
+  }
+}
+
+/* На телефонах роль кнопки «Заказать» берёт нижняя панель — в шапке она лишняя */
+@media (max-width: 47.9375rem) {
+  .header__order {
+    display: none;
+  }
+}
+
+@media (max-width: 26rem) {
+  .logo__sub {
+    display: none;
+  }
+}

@@ -1,0 +1,114 @@
+/**
+ * Галерея «атмосферы» без фотографий: каждая плитка — свой горский узор,
+ * собранный из повторяющихся градиентов. Ничего не грузится по сети.
+ */
+
+.gallery {
+  display: grid;
+  gap: var(--space-s);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  grid-auto-rows: 12rem;
+}
+
+.gallery__item {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: linear-gradient(150deg, var(--surface-2), var(--surface-inset));
+  box-shadow: var(--shadow-s);
+  transition: translate var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+
+.gallery__item:hover {
+  translate: 0 -4px;
+  box-shadow: var(--shadow-m);
+}
+
+.gallery__item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.85;
+  transition: scale var(--dur-slow) var(--ease-out);
+}
+
+.gallery__item:hover::before {
+  scale: 1.08;
+}
+
+/* Ромбовидная сетка — мотив резьбы по камню */
+.gallery__item[data-pattern='1']::before {
+  background-image:
+    repeating-linear-gradient(45deg, var(--ornament-strong) 0 2px, transparent 2px 18px),
+    repeating-linear-gradient(-45deg, var(--ornament-strong) 0 2px, transparent 2px 18px);
+}
+
+/* Полосы — мотив бурки */
+.gallery__item[data-pattern='2']::before {
+  background-image:
+    repeating-linear-gradient(90deg, var(--ornament-strong) 0 3px, transparent 3px 16px),
+    repeating-linear-gradient(0deg, var(--ornament) 0 1px, transparent 1px 8px);
+}
+
+/* Круги — медная чеканка */
+.gallery__item[data-pattern='3']::before {
+  background-image: radial-gradient(circle at center, var(--ornament-strong) 0 2px, transparent 3px);
+  background-size: 22px 22px;
+}
+
+/* Зигзаг — ковровая кайма */
+.gallery__item[data-pattern='4']::before {
+  background-image:
+    repeating-linear-gradient(135deg, var(--ornament-strong) 0 2px, transparent 2px 12px),
+    repeating-linear-gradient(45deg, var(--ornament) 0 2px, transparent 2px 12px);
+  background-size: 24px 24px;
+}
+
+/* Клетка — деревянные ставни */
+.gallery__item[data-pattern='5']::before {
+  background-image:
+    linear-gradient(var(--ornament-strong) 2px, transparent 2px),
+    linear-gradient(90deg, var(--ornament-strong) 2px, transparent 2px);
+  background-size: 26px 26px;
+}
+
+.gallery__item figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  gap: 0.1rem;
+  padding: var(--space-s);
+  background: linear-gradient(0deg, color-mix(in srgb, var(--surface) 92%, transparent), transparent);
+}
+
+.gallery__item figcaption span {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.gallery__item figcaption small {
+  color: var(--text-muted);
+  font-size: var(--step--1);
+}
+
+/* Крупные плитки только там, где хватает ширины */
+@media (min-width: 48rem) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 13rem;
+  }
+
+  .gallery__item--wide {
+    grid-column: span 2;
+  }
+}
+
+/* Ровная мозаика 2+1+1 / 1+1+2 — без пустых ячеек */
+@media (min-width: 64rem) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 14rem;
+  }
+}

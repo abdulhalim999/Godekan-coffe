@@ -1,0 +1,24 @@
+# Зависимости (сейчас их нет, но пусть будет)
+node_modules/
+
+# Сборка
+dist/
+build/
+
+# Логи
+*.log
+npm-debug.log*
+
+# Окружение
+.env
+.env.local
+
+# Редакторы и ОС
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Локальные настройки Claude Code (launch.json оставляем в репозитории)
+.claude/settings.local.json

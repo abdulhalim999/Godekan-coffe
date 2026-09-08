@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Годекан — кофейня в горском стиле</title>
+  <meta name="description" content="Годекан — кофейня-кафе в горском стиле: кофе на песке, чуду, урбеч и горные травы. Заказ навынос, доставка и места в зале.">
+  <meta name="theme-color" content="#f4ece0">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:title" content="Годекан — кофейня в горском стиле">
+  <meta property="og:description" content="Кофе на песке, чуду из печи и горные травы. Место, где садятся поговорить.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="src/styles/main.css">
+
+  <!-- Тема применяется до первой отрисовки — без вспышки светлого фона -->
+  <script>
+    (() => {
+      try {
+        const saved = JSON.parse(localStorage.getItem('godekan.theme') || '{}').mode;
+        const dark = saved === 'dark'
+          || ((!saved || saved === 'system') && matchMedia('(prefers-color-scheme: dark)').matches);
+        const theme = dark ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch {}
+    })();
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">К содержанию</a>
+
+  <!-- ─────────── Спрайт иконок ─────────── -->
+  <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"/>
+      <path d="M17 9h1.8a2.7 2.7 0 0 1 0 5.4H17"/>
+      <path d="M8 2.5c-.8 1 .8 1.7 0 2.7M12 2.5c-.8 1 .8 1.7 0 2.7"/>
+      <path d="M3 22h15"/>
+    </symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 20c0-8 5-14 16-15 .5 8-3.5 14-11 14.5"/>
+      <path d="M4 20c3-5 7-8 12-9.5"/>
+    </symbol>
+    <symbol id="i-bread" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 10.5C3.5 7.5 7 5 12 5s8.5 2.5 8.5 5.5c0 1.4-1 2.2-2.2 2.4v4.6a2 2 0 0 1-2 2h-8.6a2 2 0 0 1-2-2v-4.6c-1.2-.2-2.2-1-2.2-2.4Z"/>
+      <path d="M9 9.5c1-1 1.8-1 2.8 0M13.5 12c1-1 1.8-1 2.8 0"/>
+    </symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4.2"/>
+      <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/>
+    </symbol>
+    <symbol id="i-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="8.5"/>
+      <path d="M12 3.5v17a8.5 8.5 0 0 0 0-17Z" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-honey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m12 3 7 4v10l-7 4-7-4V7l7-4Z"/>
+      <path d="m12 8 3.4 2v4L12 16l-3.4-2v-4L12 8Z"/>
+    </symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m12 3 2.5 5.6L20.5 9l-4.4 4 1.2 6-5.3-3-5.3 3 1.2-6L3.5 9l6-.4L12 3Z"/>
+    </symbol>
+    <symbol id="i-ornament" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2.5 21.5 12 12 21.5 2.5 12 12 2.5Z"/>
+      <path d="M12 7.5 16.5 12 12 16.5 7.5 12 12 7.5Z"/>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+      <path d="M12 5v14M5 12h14"/>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 7h16M9.5 7V5.5a1.5 1.5 0 0 1 1.5-1.5h2a1.5 1.5 0 0 1 1.5 1.5V7"/>
+      <path d="M6.5 7 7.6 19a2 2 0 0 0 2 1.8h4.8a2 2 0 0 0 2-1.8L17.5 7"/>
+    </symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 4h2.2l2.3 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/>
+      <circle cx="10" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/>
+    </symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6 6 18"/>
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>
+    </symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 0 0 6.5 6.5l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.2 2 2 0 0 1 6.5 3Z"/>
+    </symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3s5 4.2 5 9a5 5 0 0 1-10 0c0-2 1-3.4 1-3.4S9 11 10.5 11C10.5 8 12 5.5 12 3Z"/>
+    </symbol>
+    <symbol id="i-hands" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 13V6.5a1.5 1.5 0 0 1 3 0V12m0-1V5.5a1.5 1.5 0 0 1 3 0V12"/>
+      <path d="M14 11V7.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6H10a5 5 0 0 1-5-5v-3.5a1.5 1.5 0 0 1 3 0"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M9.5 5C6.5 6.4 4.6 9 4.6 12.4c0 3.4 1.9 5.6 4.5 5.6 2 0 3.5-1.4 3.5-3.4 0-1.9-1.3-3.2-3-3.2-.3 0-.7 0-1 .2.4-1.7 1.7-3 3.4-3.9L9.5 5Zm9 0C15.5 6.4 13.6 9 13.6 12.4c0 3.4 1.9 5.6 4.5 5.6 2 0 3.5-1.4 3.5-3.4 0-1.9-1.3-3.2-3-3.2-.3 0-.7 0-1 .2.4-1.7 1.7-3 3.4-3.9L18.5 5Z"/>
+    </symbol>
+  </svg>
+
+  <!-- ─────────── Шапка ─────────── -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a class="logo" href="#hero" aria-label="Годекан — на главную">
+        <span class="logo__mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+            <path d="M20 3 37 20 20 37 3 20 20 3Z"/>
+            <path d="M20 10.5 29.5 20 20 29.5 10.5 20 20 10.5Z"/>
+            <path d="M20 16.5 23.5 20 20 23.5 16.5 20 20 16.5Z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="logo__text">
+          <span class="logo__name">Годекан</span>
+          <span class="logo__sub">кофейня в горах</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <a href="#about">О нас</a>
+        <a href="#menu">Меню</a>
+        <a href="#values">Почему мы</a>
+        <a href="#atmosphere">Атмосфера</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" data-mode="system" aria-label="Переключить тему">
+          <span class="theme-toggle__icons" aria-hidden="true">
+            <svg class="icon i-light"><use href="#i-sun"/></svg>
+            <svg class="icon i-dark"><use href="#i-moon"/></svg>
+            <svg class="icon i-system"><use href="#i-auto"/></svg>
+          </span>
+          <span class="theme-toggle__label">Авто</span>
+        </button>
+
+        <button class="cart-btn" type="button" data-cart-open aria-label="Корзина пуста">
+          <svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg>
+          <span class="cart-btn__count" data-cart-count hidden>0</span>
+        </button>
+
+        <button class="btn btn--primary btn--sm header__order" type="button" data-order-open>
+          Заказать
+        </button>
+
+        <button class="burger" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Открыть меню">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ─────────── Первый экран ─────────── -->
+    <section class="hero" id="hero">
+      <div class="hero__bg" aria-hidden="true">
+        <svg class="hero__mountains" viewBox="0 0 1440 420" preserveAspectRatio="none">
+          <path class="m3" d="M0 300 180 150 320 250 470 90 640 260 800 130 980 270 1140 120 1290 240 1440 140V420H0Z"/>
+          <path class="m2" d="M0 340 150 230 300 320 460 200 620 320 790 220 950 330 1120 210 1300 320 1440 250V420H0Z"/>
+          <path class="m1" d="M0 400 170 320 340 390 520 300 700 390 880 310 1060 395 1240 320 1440 390V420H0Z"/>
+        </svg>
+      </div>
+
+      <div class="container hero__inner">
+        <p class="hero__eyebrow" data-reveal>
+          <svg class="icon" aria-hidden="true"><use href="#i-ornament"/></svg>
+          Кофейня-кафе в горском стиле
+        </p>
+
+        <h1 class="hero__title" data-reveal>
+          <span class="hero__title-main">Годекан</span>
+          <span class="hero__title-sub">место, где садятся поговорить</span>
+        </h1>
+
+        <p class="hero__text" data-reveal>
+          В ауле годекан — площадь у стены, где встречались старшие: обсудить дела, рассудить спор,
+          просто помолчать вместе. Мы перенесли эту привычку в город и добавили кофе на песке,
+          горячее чуду и чай на травах со склонов.
+        </p>
+
+        <div class="hero__actions" data-reveal>
+          <a class="btn btn--primary btn--lg" href="#menu">
+            Смотреть меню
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <button class="btn btn--outline btn--lg" type="button" data-order-open>Оформить заказ</button>
+        </div>
+
+        <dl class="hero__stats" data-reveal>
+          <div><dt>с 2014</dt><dd>обжариваем сами</dd></div>
+          <div><dt>7 сортов</dt><dd>горных трав в чае</dd></div>
+          <div><dt>08:00–23:00</dt><dd>каждый день</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ─────────── О нас ─────────── -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <p class="section__eyebrow">О нас</p>
+          <h2 class="section__title">Гость приходит один — уходит своим</h2>
+          <p class="section__lead">
+            Мы держим три правила, которые в горах никто не записывает, потому что они и так понятны:
+            накормить, выслушать и не торопить.
+          </p>
+        </div>
+
+        <div class="grid grid--3">
+          <article class="tile" data-reveal>
+            <span class="tile__icon" aria-hidden="true"><svg class="icon"><use href="#i-flame"/></svg></span>
+            <h3>Кофе на песке</h3>
+            <p>Медная турка, раскалённый песок и минута тишины у стойки. Подаём с ледяной водой и кусочком халвы.</p>
+          </article>
+          <article class="tile" data-reveal>
+            <span class="tile__icon" aria-hidden="true"><svg class="icon"><use href="#i-bread"/></svg></span>
+            <h3>Тесто раскатываем руками</h3>
+            <p>Чуду, курзе и ботишал лепим с утра. Скалка, сухая сковорода, топлёное масло — как дома у бабушки.</p>
+          </article>
+          <article class="tile" data-reveal>
+            <span class="tile__icon" aria-hidden="true"><svg class="icon"><use href="#i-hands"/></svg></span>
+            <h3>Стол на всех</h3>
+            <p>Большой общий стол из карагача — за него можно подсесть к незнакомым. Так делали на годекане.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────── Меню ─────────── -->
+    <section class="section section--menu" id="menu">
+      <div class="container">
+        <div class="section__head section__head--row" data-reveal>
+          <div>
+            <p class="section__eyebrow">Ассортимент</p>
+            <h2 class="section__title">Меню</h2>
+            <p class="section__lead">
+              Показано <span id="menu-count">0</span> позиций. Всё готовим на месте, цены — за порцию.
+            </p>
+          </div>
+
+          <div class="search">
+            <label class="visually-hidden" for="menu-search">Поиск по меню</label>
+            <input class="search__input" id="menu-search" type="search" placeholder="Найти: раф, чуду, урбеч…" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="filters" id="menu-filters" role="tablist" aria-label="Категории меню" data-reveal></div>
+
+        <div class="grid grid--cards" id="menu-grid"></div>
+
+        <p class="empty" id="menu-empty" hidden>
+          Ничего не нашли. Попробуйте другое слово — или спросите у бариста, он подскажет.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────── Почему мы ─────────── -->
+    <section class="section section--band" id="values">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <p class="section__eyebrow">Почему к нам</p>
+          <h2 class="section__title">Четыре причины остаться подольше</h2>
+        </div>
+
+        <div class="grid grid--4">
+          <article class="value" data-reveal>
+            <span class="value__num">01</span>
+            <h3>Зерно своей обжарки</h3>
+            <p>Обжарочный цех в двух кварталах. Пачка зерна на вынос — со скидкой для гостей зала.</p>
+          </article>
+          <article class="value" data-reveal>
+            <span class="value__num">02</span>
+            <h3>Травы с гор</h3>
+            <p>Чабрец, душицу и шиповник собирают наши же родственники в Гунибском районе.</p>
+          </article>
+          <article class="value" data-reveal>
+            <span class="value__num">03</span>
+            <h3>Завтрак до полудня</h3>
+            <p>С 08:00 до 12:00 к любому завтраку — кофе за половину стоимости.</p>
+          </article>
+          <article class="value" data-reveal>
+            <span class="value__num">04</span>
+            <h3>Заказ за минуту</h3>
+            <p>Собрали корзину — выбрали зал, самовывоз или доставку. Перезвоним и подтвердим.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────── Атмосфера ─────────── -->
+    <section class="section" id="atmosphere">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <p class="section__eyebrow">Атмосфера</p>
+          <h2 class="section__title">Камень, шерсть и медь</h2>
+          <p class="section__lead">
+            Интерьер собирали по аулам: резные ставни, ковры из Хунзаха, медная посуда из Кубачи
+            и лавки, застеленные бурками.
+          </p>
+        </div>
+
+        <div class="gallery">
+          <figure class="gallery__item gallery__item--wide" data-pattern="1" data-reveal>
+            <figcaption><span>Общий стол</span><small>карагач, 12 мест</small></figcaption>
+          </figure>
+          <figure class="gallery__item" data-pattern="2" data-reveal>
+            <figcaption><span>Стойка</span><small>песок и медь</small></figcaption>
+          </figure>
+          <figure class="gallery__item" data-pattern="3" data-reveal>
+            <figcaption><span>Ковровый зал</span><small>тихий угол</small></figcaption>
+          </figure>
+          <figure class="gallery__item" data-pattern="4" data-reveal>
+            <figcaption><span>Терраса</span><small>вид на площадь</small></figcaption>
+          </figure>
+          <figure class="gallery__item gallery__item--wide" data-pattern="5" data-reveal>
+            <figcaption><span>Пекарня</span><small>тесто с 6 утра</small></figcaption>
+          </figure>
+          <figure class="gallery__item" data-pattern="3" data-reveal>
+            <figcaption><span>Витрина</span><small>бахлава и халва</small></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────── Отзывы ─────────── -->
+    <section class="section section--band" id="reviews">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <p class="section__eyebrow">Отзывы</p>
+          <h2 class="section__title">Что говорят гости</h2>
+        </div>
+
+        <div class="grid grid--3">
+          <blockquote class="review" data-reveal>
+            <svg class="review__quote icon" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p>Зашёл за американо, остался на хинкал и два часа разговора с соседом по столу. Так и работает.</p>
+            <footer><strong>Марат</strong><span>заходит по средам</span></footer>
+          </blockquote>
+          <blockquote class="review" data-reveal>
+            <svg class="review__quote icon" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p>Раф на чабреце — теперь мой личный ритуал. И чуду с творогом заворачивают с собой горячим.</p>
+            <footer><strong>Аида</strong><span>работает по соседству</span></footer>
+          </blockquote>
+          <blockquote class="review" data-reveal>
+            <svg class="review__quote icon" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p>Заказал доставку на офис: курзе доехали горячими, бульон не вытек. Уважение кухне.</p>
+            <footer><strong>Timur</strong><span>заказывает на 12 человек</span></footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────── Контакты ─────────── -->
+    <section class="section" id="contacts">
+      <div class="container">
+        <div class="contacts">
+          <div class="contacts__info" data-reveal>
+            <p class="section__eyebrow">Контакты</p>
+            <h2 class="section__title">Приходите или закажите</h2>
+
+            <ul class="contacts__list">
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                <div><strong>Махачкала, пр. Расула Гамзатова, 42</strong><span>первый этаж, вход со двора</span></div>
+              </li>
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>
+                <div><strong>Ежедневно 08:00 — 23:00</strong><span>кухня работает до 22:30</span></div>
+              </li>
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+                <div><a href="tel:+79280000042"><strong>+7 (928) 000-00-42</strong></a><span>звонок и WhatsApp</span></div>
+              </li>
+            </ul>
+
+            <div class="contacts__actions">
+              <button class="btn btn--primary btn--lg" type="button" data-order-open>Оформить заказ</button>
+              <a class="btn btn--outline btn--lg" href="tel:+79280000042">Позвонить</a>
+            </div>
+          </div>
+
+          <div class="contacts__map" data-reveal aria-hidden="true">
+            <div class="map">
+              <span class="map__pin"><svg class="icon"><use href="#i-pin"/></svg></span>
+              <span class="map__label">Годекан</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─────────── Подвал ─────────── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo__name">Годекан</span>
+        <p>Кофейня-кафе в горском стиле. Кофе на песке, чуду из печи, чай на травах.</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Подвал">
+        <a href="#menu">Меню</a>
+        <a href="#atmosphere">Атмосфера</a>
+        <a href="#contacts">Контакты</a>
+        <a href="tel:+79280000042">+7 (928) 000-00-42</a>
+      </nav>
+
+      <p class="footer__copy">
+        © <span id="year">2026</span> Годекан. Меню и цены — демонстрационные.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ─────────── Нижняя панель заказа (мобильные) ─────────── -->
+  <div class="order-bar" id="order-bar">
+    <button class="order-bar__info" type="button" data-cart-open>
+      <svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg>
+      <span>
+        <strong data-bar-total>0 ₽</strong>
+        <small data-bar-count>0 позиций</small>
+      </span>
+    </button>
+    <button class="btn btn--primary" type="button" data-order-open>Заказать</button>
+  </div>
+
+  <!-- ─────────── Корзина ─────────── -->
+  <aside class="drawer" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-title" hidden>
+    <div class="drawer__backdrop" data-overlay-backdrop></div>
+
+    <div class="drawer__panel">
+      <header class="drawer__head">
+        <h2 class="drawer__title" id="cart-title">Ваш заказ</h2>
+        <button class="icon-btn" id="cart-close" type="button" data-cart-close aria-label="Закрыть корзину">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </header>
+
+      <div class="drawer__body">
+        <ul class="cart-lines" id="cart-lines"></ul>
+
+        <div class="cart-empty" id="cart-empty">
+          <svg class="icon icon--xl" aria-hidden="true"><use href="#i-cup"/></svg>
+          <p>Пока пусто. Выберите кофе или чуду — соберём заказ.</p>
+          <button class="btn btn--outline" type="button" data-cart-close>К меню</button>
+        </div>
+      </div>
+
+      <footer class="drawer__foot" id="cart-summary" hidden>
+        <div class="drawer__total">
+          <span>Сумма</span>
+          <strong id="cart-subtotal">0 ₽</strong>
+        </div>
+        <button class="btn btn--primary btn--lg btn--block" id="cart-checkout" type="button">
+          Оформить заказ
+        </button>
+        <button class="link-btn" id="cart-clear" type="button">Очистить корзину</button>
+      </footer>
+    </div>
+  </aside>
+
+  <!-- ─────────── Модалка заказа ─────────── -->
+  <div class="modal" id="order" role="dialog" aria-modal="true" aria-labelledby="order-title" hidden>
+    <div class="modal__backdrop" data-overlay-backdrop></div>
+
+    <div class="modal__panel">
+      <button class="icon-btn modal__close" type="button" data-order-close aria-label="Закрыть окно заказа">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+
+      <form class="order-form" id="order-form" novalidate>
+        <h2 class="modal__title" id="order-title">Оформление заказа</h2>
+        <p class="modal__lead">Заполните три поля — перезвоним и подтвердим за пару минут.</p>
+
+        <fieldset class="segmented">
+          <legend class="visually-hidden">Способ получения</legend>
+          <label><input type="radio" name="method" value="inhouse" checked><span>В зале</span></label>
+          <label><input type="radio" name="method" value="pickup"><span>Самовывоз</span></label>
+          <label><input type="radio" name="method" value="delivery"><span>Доставка</span></label>
+        </fieldset>
+
+        <div class="fields">
+          <div class="field">
+            <label for="order-name">Имя</label>
+            <input id="order-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+            <p class="field__error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="order-phone">Телефон</label>
+            <input id="order-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__">
+            <p class="field__error" role="alert"></p>
+          </div>
+
+          <div class="field" data-field="address" hidden>
+            <label for="order-address">Адрес доставки</label>
+            <input id="order-address" name="address" type="text" autocomplete="street-address" placeholder="Улица, дом, квартира">
+            <p class="field__error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="order-time">Ко времени</label>
+            <select id="order-time" name="time">
+              <option value="asap">Как можно скорее</option>
+              <option value="30">Через 30 минут</option>
+              <option value="60">Через час</option>
+              <option value="evening">Вечером, после 18:00</option>
+            </select>
+          </div>
+
+          <div class="field field--wide">
+            <label for="order-comment">Комментарий</label>
+            <textarea id="order-comment" name="comment" rows="2" placeholder="Без сахара, чуду поострее, столик у окна…"></textarea>
+          </div>
+        </div>
+
+        <div class="order-summary">
+          <h3>Состав заказа</h3>
+          <ul class="order-lines" id="order-lines"></ul>
+          <div id="order-totals"></div>
+        </div>
+
+        <button class="btn btn--primary btn--lg btn--block" id="order-submit" type="submit">
+          <span class="btn__text">Подтвердить заказ</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+        <p class="order-note">Нажимая кнопку, вы соглашаетесь на обработку данных для связи по заказу.</p>
+      </form>
+
+      <div class="order-success" id="order-success" hidden>
+        <span class="order-success__mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 3 45 24 24 45 3 24 24 3Z"/><path d="m15 24 6.5 6.5L33 19"/>
+          </svg>
+        </span>
+        <h2>Заказ принят</h2>
+        <p class="order-success__number">Номер: <strong id="order-number">ГД-0000</strong></p>
+        <p id="order-method-note"></p>
+        <button class="btn btn--primary btn--lg" id="order-success-close" type="button" data-order-close>Готово</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

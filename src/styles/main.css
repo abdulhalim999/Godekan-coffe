@@ -1,0 +1,24 @@
+/**
+ * Годекан — точка сборки стилей.
+ * Каскадные слои задают приоритет раз и навсегда: специфичность больше
+ * не решает исход, порядок слоёв решает.
+ */
+@layer reset, tokens, base, layout, components, utilities;
+
+@import url('base/reset.css') layer(reset);
+@import url('base/tokens.css') layer(tokens);
+@import url('base/typography.css') layer(base);
+@import url('base/layout.css') layer(layout);
+@import url('base/utilities.css') layer(utilities);
+
+@import url('components/buttons.css') layer(components);
+@import url('components/header.css') layer(components);
+@import url('components/hero.css') layer(components);
+@import url('components/sections.css') layer(components);
+@import url('components/menu.css') layer(components);
+@import url('components/gallery.css') layer(components);
+@import url('components/contacts.css') layer(components);
+@import url('components/cart.css') layer(components);
+@import url('components/modal.css') layer(components);
+@import url('components/footer.css') layer(components);
+@import url('components/feedback.css') layer(components);

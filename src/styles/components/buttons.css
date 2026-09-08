@@ -1,0 +1,211 @@
+/* Кнопки, чипсы, степперы — всё интерактивное «мелкое». */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: 0.75rem 1.35rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: var(--step-0);
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    translate var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  translate: 0 1px;
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  translate: none;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--shadow-s);
+}
+
+.btn--primary:hover:not([disabled]) {
+  background: var(--accent-hover);
+  box-shadow: var(--shadow-m);
+}
+
+.btn--outline {
+  border-color: var(--line-strong);
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+}
+
+.btn--outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn--ghost {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.btn--ghost:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn--sm {
+  padding: 0.5rem 0.95rem;
+  font-size: var(--step--1);
+}
+
+.btn--lg {
+  padding: 0.95rem 1.75rem;
+  font-size: var(--step-1);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn .icon {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+/* Состояние отправки формы */
+.btn__spinner {
+  display: none;
+  width: 1.1em;
+  height: 1.1em;
+  border: 2px solid color-mix(in srgb, var(--on-accent) 40%, transparent);
+  border-top-color: var(--on-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.btn.is-loading .btn__spinner {
+  display: block;
+}
+
+.btn.is-loading .btn__text {
+  opacity: 0.75;
+}
+
+@keyframes spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/* Иконочная кнопка */
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.icon-btn:hover {
+  background: var(--surface-inset);
+  color: var(--text);
+}
+
+.link-btn {
+  align-self: center;
+  color: var(--text-muted);
+  font-size: var(--step--1);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: var(--space-2xs);
+}
+
+.link-btn:hover {
+  color: var(--red);
+}
+
+/* Чипсы-фильтры */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--step--1);
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.chip:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+
+.chip[aria-selected='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.chip__icon {
+  width: 1.05em;
+  height: 1.05em;
+  opacity: 0.85;
+}
+
+/* Степпер количества */
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.15rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inset);
+}
+
+.stepper__btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.stepper__btn:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.stepper__value {
+  min-width: 1.6rem;
+  text-align: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper--card {
+  background: var(--accent-soft);
+}

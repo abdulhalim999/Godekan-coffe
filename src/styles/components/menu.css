@@ -1,0 +1,178 @@
+/* Меню: поиск, фильтры, карточки блюд. */
+
+.search {
+  flex: 0 1 20rem;
+}
+
+.search__input {
+  width: 100%;
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.search__input::placeholder {
+  color: var(--text-faint);
+}
+
+.search__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ── Фильтры ───────────────────────────────────────────────────────── */
+.filters {
+  display: flex;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-m);
+  overflow-x: auto;
+  padding-block: 0.25rem;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filters .chip {
+  scroll-snap-align: start;
+}
+
+/* Подсказка о прокрутке фильтров на узких экранах */
+@media (max-width: 47.9375rem) {
+  .filters {
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  }
+}
+
+/* ── Карточка ──────────────────────────────────────────────────────── */
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow-s);
+  transition:
+    translate var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.card:hover {
+  translate: 0 -4px;
+  box-shadow: var(--shadow-m);
+  border-color: var(--ornament-strong);
+}
+
+/* «Фотография» заменена ковровым орнаментом — узнаваемо и не грузит сеть */
+.card__thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(140deg, var(--surface-2), var(--surface-inset));
+  color: var(--accent);
+  overflow: hidden;
+}
+
+.card__pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.65;
+  background-image:
+    repeating-linear-gradient(45deg, var(--ornament) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(-45deg, var(--ornament) 0 1px, transparent 1px 12px);
+}
+
+.card__icon {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  transition: scale var(--dur) var(--ease-out), rotate var(--dur-slow) var(--ease-out);
+}
+
+.card:hover .card__icon {
+  scale: 1.12;
+  rotate: -6deg;
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  padding: var(--space-s);
+  flex: 1;
+}
+
+.card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.15rem;
+}
+
+.badge {
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge--accent { background: var(--accent-soft); color: var(--accent); }
+.badge--gold { background: var(--gold-soft); color: var(--gold); }
+.badge--green { background: var(--green-soft); color: var(--green); }
+.badge--red { background: var(--red-soft); color: var(--red); }
+
+.card__title {
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+.card__meta {
+  font-size: var(--step--1);
+  color: var(--text-faint);
+}
+
+.card__desc {
+  margin-top: var(--space-3xs);
+  font-size: var(--step--1);
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2xs);
+  margin-top: var(--space-s);
+  padding-top: var(--space-s);
+  border-top: 1px dashed var(--line);
+}
+
+.card__price {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  padding: var(--space-xl) var(--space-m);
+  text-align: center;
+  color: var(--text-muted);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-l);
+}

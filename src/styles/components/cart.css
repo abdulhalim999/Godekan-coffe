@@ -1,0 +1,199 @@
+/* Выдвижная корзина. На мобильных — лист снизу, на десктопе — панель справа. */
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  transition: opacity var(--dur) var(--ease-out);
+  opacity: 0;
+}
+
+.drawer.is-open {
+  opacity: 1;
+}
+
+.drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--backdrop);
+  backdrop-filter: blur(3px);
+}
+
+.drawer__panel {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 88svh;
+  background: var(--surface);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  box-shadow: var(--shadow-l);
+  translate: 0 100%;
+  transition: translate var(--dur) var(--ease-in-out);
+}
+
+.drawer.is-open .drawer__panel {
+  translate: 0 0;
+}
+
+.drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-m);
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer__title {
+  font-size: var(--step-2);
+}
+
+.drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-s) var(--space-m);
+}
+
+.drawer__foot {
+  display: grid;
+  gap: var(--space-2xs);
+  padding: var(--space-s) var(--space-m) calc(var(--space-m) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.drawer__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: var(--step-1);
+}
+
+.drawer__total strong {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Строка корзины ────────────────────────────────────────────────── */
+.cart-lines {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.cart-line {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-s);
+  align-items: center;
+  padding-bottom: var(--space-s);
+  border-bottom: 1px solid var(--line);
+  animation: line-in var(--dur) var(--ease-out);
+}
+
+@keyframes line-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+
+.cart-line:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cart-line__thumb {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: var(--radius-m);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.cart-line__body {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.cart-line__name {
+  font-weight: 600;
+}
+
+.cart-line__meta {
+  font-size: var(--step--1);
+  color: var(--text-faint);
+}
+
+.cart-line__price {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.cart-line__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.cart-line__remove {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  color: var(--text-faint);
+  transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.cart-line__remove:hover {
+  color: var(--red);
+  background: var(--red-soft);
+}
+
+/* ── Пустое состояние ──────────────────────────────────────────────── */
+.cart-empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-s);
+  padding: var(--space-xl) var(--space-s);
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.cart-empty .icon {
+  color: var(--ornament-strong);
+}
+
+/* ── Десктоп: панель справа ────────────────────────────────────────── */
+@media (min-width: 48rem) {
+  .drawer__panel {
+    inset: 0 0 0 auto;
+    width: min(28rem, 100%);
+    max-height: none;
+    border-radius: var(--radius-l) 0 0 var(--radius-l);
+    translate: 100% 0;
+  }
+
+  .drawer.is-open .drawer__panel {
+    translate: 0 0;
+  }
+}
+
+/* На узких мобильных строка перестраивается в две колонки */
+@media (max-width: 24rem) {
+  .cart-line {
+    grid-template-columns: auto 1fr;
+  }
+
+  .cart-line__controls {
+    grid-column: 2;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,125 @@
+/* Контакты и декоративная карта-заглушка. */
+
+.contacts {
+  display: grid;
+  gap: var(--space-l);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  align-items: center;
+}
+
+.contacts__info {
+  display: grid;
+  gap: var(--space-s);
+  align-content: start;
+}
+
+.contacts__list {
+  display: grid;
+  gap: var(--space-s);
+  margin-top: var(--space-2xs);
+}
+
+.contacts__list li {
+  display: flex;
+  gap: var(--space-s);
+  align-items: start;
+}
+
+.contacts__list .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--accent);
+  margin-top: 0.15rem;
+}
+
+.contacts__list div {
+  display: grid;
+}
+
+.contacts__list span {
+  color: var(--text-muted);
+  font-size: var(--step--1);
+}
+
+.contacts__list a:hover strong {
+  color: var(--accent);
+}
+
+.contacts__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-2xs);
+}
+
+/* ── Карта-заглушка ────────────────────────────────────────────────── */
+.map {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, var(--surface-2), var(--surface-inset));
+  box-shadow: var(--shadow-m);
+}
+
+/* «Кварталы» — условная сетка улиц */
+.map::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background-image:
+    linear-gradient(var(--ornament) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ornament) 1px, transparent 1px),
+    linear-gradient(var(--ornament-strong) 2px, transparent 2px);
+  background-size: 40px 40px, 40px 40px, 100% 120px;
+  rotate: -8deg;
+}
+
+.map__pin {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--shadow-m);
+  animation: pulse 2.6s var(--ease-in-out) infinite;
+}
+
+.map__pin .icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  60% {
+    box-shadow: 0 0 0 1.5rem transparent;
+  }
+}
+
+.map__label {
+  position: relative;
+  margin-top: var(--space-2xs);
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map__pin {
+    animation: none;
+  }
+}

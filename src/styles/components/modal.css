@@ -1,0 +1,304 @@
+/* Модальное окно оформления заказа: форма, состав, экран подтверждения. */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: end center;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.modal.is-open {
+  opacity: 1;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--backdrop);
+  backdrop-filter: blur(3px);
+}
+
+.modal__panel {
+  position: relative;
+  width: min(38rem, 100%);
+  max-height: 92svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-l) var(--space-m) calc(var(--space-m) + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  box-shadow: var(--shadow-l);
+  translate: 0 3rem;
+  transition: translate var(--dur) var(--ease-in-out);
+}
+
+.modal.is-open .modal__panel {
+  translate: 0 0;
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  background: var(--surface-2);
+}
+
+.modal__title {
+  font-size: var(--step-2);
+}
+
+.modal__lead {
+  margin-top: var(--space-3xs);
+  color: var(--text-muted);
+  font-size: var(--step--1);
+}
+
+/* ── Переключатель способа получения ───────────────────────────────── */
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.2rem;
+  margin-block: var(--space-m) var(--space-s);
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inset);
+}
+
+.segmented label {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 0.55rem 0.5rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+
+.segmented label:hover {
+  color: var(--text);
+}
+
+.segmented label:has(input:checked) {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--shadow-s);
+}
+
+.segmented label:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Поля формы ────────────────────────────────────────────────────── */
+.fields {
+  display: grid;
+  gap: var(--space-s);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 3.5rem;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--text-faint);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.field__error {
+  font-size: var(--step--1);
+  color: var(--red);
+  min-height: 0;
+  display: none;
+}
+
+.field.has-error input,
+.field.has-error textarea {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-soft);
+}
+
+.field.has-error .field__error {
+  display: block;
+}
+
+/* ── Состав заказа ─────────────────────────────────────────────────── */
+.order-summary {
+  margin-block: var(--space-m);
+  padding: var(--space-s);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.order-summary h3 {
+  font-size: var(--step-0);
+  margin-bottom: var(--space-2xs);
+}
+
+.order-lines {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: var(--space-2xs);
+  max-height: 11rem;
+  overflow-y: auto;
+}
+
+.order-line {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-s);
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.order-line__sum {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding-block: 0.2rem;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+  border-top: 1px dashed var(--line);
+}
+
+.order-row.is-accent span:last-child {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.order-hint {
+  padding-block: 0.2rem;
+  font-size: var(--step--1);
+  color: var(--gold);
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: var(--space-2xs);
+  padding-top: var(--space-2xs);
+  border-top: 1px solid var(--line-strong);
+  font-weight: 600;
+}
+
+.order-total strong {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.order-note {
+  margin-top: var(--space-2xs);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+/* ── Экран «заказ принят» ──────────────────────────────────────────── */
+.order-success {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-s);
+  padding-block: var(--space-l);
+  text-align: center;
+}
+
+.order-success__mark {
+  width: 5rem;
+  height: 5rem;
+  color: var(--accent);
+  animation: mark-in var(--dur-slow) var(--ease-out);
+}
+
+@keyframes mark-in {
+  from {
+    scale: 0.6;
+    rotate: -25deg;
+    opacity: 0;
+  }
+}
+
+.order-success h2 {
+  font-size: var(--step-3);
+}
+
+.order-success__number strong {
+  font-family: var(--font-display);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+.order-success p {
+  color: var(--text-muted);
+  max-width: 26rem;
+}
+
+/* ── Планшет и десктоп: окно по центру ─────────────────────────────── */
+@media (min-width: 40rem) {
+  .modal {
+    place-items: center;
+    padding: var(--space-m);
+  }
+
+  .modal__panel {
+    border-radius: var(--radius-l);
+    padding: var(--space-l);
+  }
+}
