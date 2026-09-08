@@ -46,7 +46,15 @@ git merge feature/menu-photos
 git switch main
 git merge develop
 git tag -a v1.1.0 -m "Фотографии в меню"
+git push origin main develop --tags
+
+# 5. вернуть main в develop, чтобы ветки не разошлись
+git switch develop
+git merge main
 ```
+
+Шаг 5 нужен, когда слияние в `main` создало merge-коммит: без него `develop`
+и `main` расходятся и следующее слияние перестаёт быть fast-forward.
 
 Новая задача, которой нет в таблице:
 
