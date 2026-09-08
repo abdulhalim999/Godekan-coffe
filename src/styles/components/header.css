@@ -279,3 +279,30 @@
     display: none;
   }
 }
+
+/* Складные телефоны и очень узкие экраны (до 320 px):
+   ужимаем логотип и кнопки, чтобы шапка не разъезжалась */
+@media (max-width: 20rem) {
+  .header__inner {
+    gap: var(--space-2xs);
+  }
+
+  .logo__mark {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
+
+  .logo__name {
+    font-size: var(--step-0);
+  }
+
+  .cart-btn,
+  .burger {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+
+  .burger {
+    padding: 0.62rem 0.55rem;
+  }
+}
